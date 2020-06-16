@@ -1,4 +1,4 @@
-const socket = io.connect('localhost:3000')
+const socket = io.connect(window.location.hostname)
 
 const name = document.querySelector('#name')
 const link = document.querySelector('#link')

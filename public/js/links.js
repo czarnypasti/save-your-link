@@ -1,4 +1,4 @@
-const socket = io.connect('localhost:3000')
+const socket = io.connect(window.location.hostname)
 const linksContainer = document.querySelector('.links-container')
 const saveEditBtn = document.querySelector('.save-edit-btn')
 const exitBtn = document.querySelector('.exit-btn')
