@@ -3,13 +3,19 @@ div.edit-module-wrapper
     h3 edit:
     form.form-module
       div
-        label(for="name-edit") name
+        div.info
+          label(for="name-edit") name
+          span.alert(data-alert="name-edit") field can't be empty
         input#name-edit(type="text", name="name-mod")
-      div 
-        label(for="link-edit") link
+      div
+        div.info
+          label(for="link-edit") link
+          span.alert(data-alert="link-edit") field can't be empty
         input#link-edit(type="text", name="link-mod")
-      div 
-        label(for="tags-edit") tags
+      div
+        div.info 
+          label(for="tags-edit") tags
+          span.alert(data-alert="tags-edit") field can't be empty
         input#tags-edit(type="text", name="tags-mod")
       div 
         label(for="id-edit") id

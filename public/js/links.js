@@ -8,6 +8,7 @@ const nameEdit = document.querySelector('#name-edit')
 const linkEdit = document.querySelector('#link-edit')
 const tagsEdit = document.querySelector('#tags-edit')
 const idEdit = document.querySelector('#id-edit')
+const alerts = [...document.querySelectorAll('.alert')]
 
 const editInputs = [nameEdit, linkEdit, tagsEdit, idEdit]
 
@@ -29,22 +30,35 @@ exitBtn.addEventListener('click', () => {
 })
 
 saveEditBtn.addEventListener('click', () => {
-  let splitedEditTags = tagsEdit.value.length > 1 ? 
+  alerts.map(item => item.classList.remove('alert--display'))
+  const emptyInputs = editInputs.filter(input => !input.value).map(input => input.id)
+
+  console.log(emptyInputs)
+
+  if (emptyInputs.length != 0) {
+    alerts.filter(item => 
+      emptyInputs.includes(item.dataset.alert) ? 
+        item.classList.add('alert--display') : 
+        null
+    )
+  } else {
+    let splitedEditTags = tagsEdit.value.length > 1 ? 
     tagsEdit.value.split(',').map(x => x.trim()) : 
     tagsEdit.value
 
-  const linksWrappers = [...document.querySelectorAll('.link-wrapper')]
+    const linksWrappers = [...document.querySelectorAll('.link-wrapper')]
 
-  const { name, link, tags } = findById(linksWrappers, idEdit.value)
+    const { name, link, tags } = findById(linksWrappers, idEdit.value)
 
-  name.textContent = nameEdit.value
-  link.setAttribute('href', linkEdit.value)
-  tags.textContent = `tags: ${splitedEditTags.join(', ')}`
+    name.textContent = nameEdit.value
+    link.setAttribute('href', linkEdit.value)
+    tags.textContent = `tags: ${splitedEditTags.join(', ')}`
 
-  socket.emit('editedData', {name: nameEdit.value, link: linkEdit.value, tags: splitedEditTags, id: idEdit.value})
+    socket.emit('editedData', {name: nameEdit.value, link: linkEdit.value, tags: splitedEditTags, id: idEdit.value})
 
-  editInputs.map(x => x.value = '')
-  editModule.classList.remove('module--display')
+    editInputs.map(x => x.value = '')
+    editModule.classList.remove('module--display')
+  }
 })
 
 function generateLinksList(array) {

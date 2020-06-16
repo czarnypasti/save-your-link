@@ -30,7 +30,7 @@ form > div {
   margin: 0 0 10px 0;
 }
 
-.info {
+.info, label[for="id-edit"] {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -114,10 +114,6 @@ input {
   transform: translate(-50%, -50%);
   background-color: rgb(216, 216, 216);
   padding: 30px 40px;
-}
-
-.form-module label {
-  margin: 0 0 4px 0;
 }
 
 .btns-wrapper {
