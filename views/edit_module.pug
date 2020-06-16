@@ -1,0 +1,19 @@
+div.edit-module-wrapper
+  div.edit-module
+    h3 edit:
+    form.form-module
+      div
+        label(for="name-edit") name
+        input#name-edit(type="text", name="name-mod")
+      div 
+        label(for="link-edit") link
+        input#link-edit(type="text", name="link-mod")
+      div 
+        label(for="tags-edit") tags
+        input#tags-edit(type="text", name="tags-mod")
+      div 
+        label(for="id-edit") id
+        input#id-edit(type="number", name="id-mod", disabled)
+      div.btns-wrapper 
+        button.save-edit-btn(type="button") save
+        button.exit-btn(type="button") exit

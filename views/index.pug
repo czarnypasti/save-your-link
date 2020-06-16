@@ -1,0 +1,24 @@
+html
+  head
+    link(rel="stylesheet", href="./css/style.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js")
+  body
+    include ./header.pug
+    form
+      div
+        div.info
+          label(for="name") name
+          span.alert(data-alert="name") field is required
+        input#name(type="text", name="name")
+      div
+        div.info 
+          label(for="link") link
+          span.alert(data-alert="link") field is required
+        input#link(type="text", name="link")
+      div
+        div.info 
+          label(for="tags") tags
+          span.alert(data-alert="tags") field is required
+        input#tags(type="text", name="tags")
+      button.save-btn(type="button") save
+    script(src="./js/index.js")
