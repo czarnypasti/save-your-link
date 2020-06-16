@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital@0;1&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 body, form, div {
