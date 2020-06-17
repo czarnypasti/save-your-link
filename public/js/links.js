@@ -14,7 +14,18 @@ const editInputs = [nameEdit, linkEdit, tagsEdit, idEdit]
 
 socket.emit('linksRequest', '')
 socket.on('parsedLinks', async data => {
-  await generateLinksList(data)
+  let links = []
+
+  data.map((link) => {
+    links.push({
+      name: link.name,
+      link: link.link,
+      tags: link.tags.split(','),
+      id: link.link_id
+    })
+  })
+
+  await generateLinksList(links)
 
   const editBtns = [...document.querySelectorAll('.edit-btn')]
   const deleteBtns = [...document.querySelectorAll('.delete-btn')]
@@ -33,8 +44,6 @@ saveEditBtn.addEventListener('click', () => {
   alerts.map(item => item.classList.remove('alert--display'))
   const emptyInputs = editInputs.filter(input => !input.value).map(input => input.id)
 
-  console.log(emptyInputs)
-
   if (emptyInputs.length != 0) {
     alerts.filter(item => 
       emptyInputs.includes(item.dataset.alert) ? 
@@ -42,9 +51,7 @@ saveEditBtn.addEventListener('click', () => {
         null
     )
   } else {
-    let splitedEditTags = tagsEdit.value.length > 1 ? 
-    tagsEdit.value.split(',').map(x => x.trim()) : 
-    tagsEdit.value
+    const _tags = tagsEdit.value.replace(/\s/g, '')
 
     const linksWrappers = [...document.querySelectorAll('.link-wrapper')]
 
@@ -52,9 +59,9 @@ saveEditBtn.addEventListener('click', () => {
 
     name.textContent = nameEdit.value
     link.setAttribute('href', linkEdit.value)
-    tags.textContent = `tags: ${splitedEditTags.join(', ')}`
+    tags.textContent = `tags: ${_tags.replace(/,/g, ', ')}`
 
-    socket.emit('editedData', {name: nameEdit.value, link: linkEdit.value, tags: splitedEditTags, id: idEdit.value})
+    socket.emit('editedData', {name: nameEdit.value, link: linkEdit.value, tags: _tags, id: idEdit.value})
 
     editInputs.map(x => x.value = '')
     editModule.classList.remove('module--display')

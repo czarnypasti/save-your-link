@@ -18,11 +18,9 @@ saveBtn.addEventListener('click', () => {
         null
     )
   } else {
-    let splitedTags = tags.value.length > 1 ? 
-      tags.value.split(',').map(x => x.trim()) : 
-      tags.value
+    const _tags = tags.value.replace(/\s/g, '')
 
-    socket.emit('linkData', {name: name.value, link: link.value, tags: splitedTags})
+    socket.emit('newLinkData', {name: name.value, link: link.value, tags: _tags})
     
     inputs.map(item => item.value = '')
   }

@@ -54,7 +54,7 @@ input {
   width: 300px;
 }
 
-.save-btn {
+.save-btn, .login-btn {
   margin: 10px 0 0 0;
   padding: 4px;
   width: 100px;
