@@ -12,8 +12,6 @@ const dbCon = require('./db/db')
 const app = express()
 const port = process.env.PORT || 3000
 
-console.log(process.env.DB_HOST)
-
 app.engine('pug', require('pug').__express)
 app.set('view engine', 'pug')
 
