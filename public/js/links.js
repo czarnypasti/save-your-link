@@ -54,16 +54,17 @@ saveEditBtn.addEventListener('click', () => {
     )
   } else {
     const _tags = tagsEdit.value.replace(/\s/g, '')
+    const _link = linkEdit.value.match(/^((http|https):\/\/)/g) ? linkEdit.value : `http://${linkEdit.value}`
 
     const linksWrappers = [...document.querySelectorAll('.link-wrapper')]
 
     const { name, link, tags } = findById(linksWrappers, idEdit.value)
 
     name.textContent = nameEdit.value
-    link.setAttribute('href', linkEdit.value)
+    link.setAttribute('href', _link)
     tags.textContent = `tags: ${_tags.replace(/,/g, ', ')}`
 
-    socket.emit('editedData', {name: nameEdit.value, link: linkEdit.value, tags: _tags, id: idEdit.value})
+    socket.emit('editedData', {name: nameEdit.value, link: _link, tags: _tags, id: idEdit.value})
 
     editInputs.map(x => x.value = '')
     editModule.classList.remove('module--display')

@@ -21,8 +21,9 @@ saveBtn.addEventListener('click', () => {
     )
   } else {
     const _tags = tags.value.replace(/\s/g, '')
+    const _link = link.value.match(/^((http|https):\/\/)/g) ? link.value : `http://${link.value}`
 
-    socket.emit('newLinkData', {name: name.value, link: link.value, tags: _tags})
+    socket.emit('newLinkData', {name: name.value, link: _link, tags: _tags})
     
     inputs.map(item => item.value = '')
   }
