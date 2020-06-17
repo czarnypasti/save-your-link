@@ -12,6 +12,8 @@ const dbCon = require('./db/db')
 const app = express()
 const port = process.env.PORT || 3000
 
+console.log(process.env.DB_HOST)
+
 app.engine('pug', require('pug').__express)
 app.set('view engine', 'pug')
 
@@ -32,7 +34,6 @@ app.post('/auth', (req, res) => {
   if (username && password) {
     dbCon.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, result) => {
       if (result.length > 0) {
-        console.log(result)
         req.session.loggedin = true
         req.session.userId = result[0].id
         res.redirect('/home')
