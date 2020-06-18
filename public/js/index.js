@@ -20,10 +20,11 @@ saveBtn.addEventListener('click', () => {
         null
     )
   } else {
-    const _tags = tags.value.replace(/\s/g, '')
+    const tagsArray = tags.value.split(',').map(x => x.replace(/ /g, '')).filter(x => x != '')
+    const uniqueTags = [...new Set(tagsArray)].join(',')
     const _link = link.value.match(/^((http|https):\/\/)/g) ? link.value : `http://${link.value}`
 
-    socket.emit('newLinkData', {name: name.value, link: _link, tags: _tags})
+    socket.emit('newLinkData', {name: name.value, link: _link, tags: uniqueTags})
     
     inputs.map(item => item.value = '')
   }

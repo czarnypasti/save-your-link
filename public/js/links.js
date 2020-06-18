@@ -53,7 +53,8 @@ saveEditBtn.addEventListener('click', () => {
         null
     )
   } else {
-    const _tags = tagsEdit.value.replace(/\s/g, '')
+    const tagsArray = tagsEdit.value.split(',').map(x => x.replace(/ /g, '')).filter(x => x != '')
+    const uniqueTags = [...new Set(tagsArray)].join(',')
     const _link = linkEdit.value.match(/^((http|https):\/\/)/g) ? linkEdit.value : `http://${linkEdit.value}`
 
     const linksWrappers = [...document.querySelectorAll('.link-wrapper')]
@@ -62,9 +63,9 @@ saveEditBtn.addEventListener('click', () => {
 
     name.textContent = nameEdit.value
     link.setAttribute('href', _link)
-    tags.textContent = `tags: ${_tags.replace(/,/g, ', ')}`
+    tags.textContent = `tags: ${uniqueTags.replace(/,/g, ', ')}`
 
-    socket.emit('editedData', {name: nameEdit.value, link: _link, tags: _tags, id: idEdit.value})
+    socket.emit('editedData', {name: nameEdit.value, link: _link, tags: uniqueTags, id: idEdit.value})
 
     editInputs.map(x => x.value = '')
     editModule.classList.remove('module--display')
