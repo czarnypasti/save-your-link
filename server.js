@@ -47,7 +47,7 @@ app.post('/auth', (req, res) => {
 })
 
 app.get('/home', (req, res) => {
-  if (!req.session.loggedin) {
+  if (req.session.loggedin) {
     res.render('index', {})
   } else {
     res.send('Please login to view this page')
@@ -56,7 +56,7 @@ app.get('/home', (req, res) => {
 })
 
 app.get('/links', (req, res) => {
-  if (!req.session.loggedin) {
+  if (req.session.loggedin) {
     res.render('links', {})
   } else {
     res.send('Please login to view this page')
@@ -71,7 +71,7 @@ const io = require('socket.io')(server)
 io.use(sharedsession(session, { autoSave: true }))
 
 io.on('connection', socket => {
-  const userId = socket.handshake.session.userId || 1
+  const userId = socket.handshake.session.userId
 
   socket.on('newLinkData', linkData => {
     const linkId = Date.now()
