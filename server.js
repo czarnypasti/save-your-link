@@ -35,7 +35,9 @@ app.post('/auth', (req, res) => {
       if (result.length > 0) {
         req.session.loggedin = true
         req.session.userId = result[0].id
+        req.session.username = username
         res.redirect('/home')
+        console.log(`${username} [${result[0].id}] has logged in`)
       } else {
         res.send('Incorrect username and/or password')
       }
@@ -73,6 +75,7 @@ io.use(sharedsession(session, { autoSave: true }))
 
 io.on('connection', socket => {
   const userId = socket.handshake.session.userId
+  const username = socket.handshake.session.username
 
   socket.on('newLinkData', linkData => {
     const linkId = Date.now()
@@ -80,6 +83,7 @@ io.on('connection', socket => {
 
     dbCon.query('INSERT INTO links VALUES (?)', [[linkId, userId, name, link, tags]], err => {
       if (err) throw err
+      console.log(`Link [${linkId}] has been inserted by ${username} [${userId}]`)
     })
   })
 
@@ -95,12 +99,14 @@ io.on('connection', socket => {
 
     dbCon.query('UPDATE links SET name = ?, link = ?, tags = ? WHERE user_id = ? AND link_id = ?', [name, link, tags, userId, id], err => {
       if (err) throw err
+      console.log(`Link [${id}] has been updated by ${username} [${userId}]`)
     })
   })
 
   socket.on('deletedLink', id => {
     dbCon.query('DELETE FROM links WHERE link_id = ? AND user_id = ?', [id, userId], err => {
       if (err) throw err
+      console.log(`Link [${id}] has been deleted by ${username} [${userId}]`)
     })
   })
 })
