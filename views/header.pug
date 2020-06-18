@@ -1,5 +1,10 @@
 header
   h1 Save your link
+  div.user-info
+    p logged in as 
+      span= username 
+    form(action="logout", method="get")
+      button.logout-btn(type="submit") logout
   nav
     a(href="/home") home
     a(href="/links") links

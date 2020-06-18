@@ -49,9 +49,20 @@ app.post('/auth', (req, res) => {
   }
 })
 
+app.get('/logout', (req, res) => {
+  if (req.session.loggedin) {
+    console.log(`${req.session.username} [${req.session.userId}] has logged out`)
+    req.session.destroy(err => {
+      res.redirect('/')
+    })
+  } else {
+    res.redirect('/')
+  }
+})
+
 app.get('/home', (req, res) => {
   if (req.session.loggedin) {
-    res.render('index', {})
+    res.render('index', { username: req.session.username })
   } else {
     res.send('Please login to view this page')
   }
@@ -60,7 +71,7 @@ app.get('/home', (req, res) => {
 
 app.get('/links', (req, res) => {
   if (req.session.loggedin) {
-    res.render('links', {})
+    res.render('links', { username: req.session.username })
   } else {
     res.send('Please login to view this page')
   }

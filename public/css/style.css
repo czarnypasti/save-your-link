@@ -7,7 +7,7 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
-.container, form, div {
+.container, form {
   display: flex;
   flex-direction: column;
 }
@@ -125,10 +125,11 @@ input {
   justify-content: flex-end;
 }
 
-.save-edit-btn, .exit-btn {
-  padding: 4px;
-  width: 70px;
-  margin: 0 0 0 5px;
+.logout-btn {
+  padding: 2px 4px;
+  margin: 5px 0 0 0;
+  position: absolute;
+  right: 0;
 }
 
 .search-wrapper {
@@ -143,4 +144,15 @@ input {
 
 .hide-link {
   display: none;
+}
+
+.user-info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.user-info span {
+  font-weight: bold;
 }
