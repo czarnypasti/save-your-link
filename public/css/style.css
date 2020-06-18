@@ -125,6 +125,12 @@ input {
   justify-content: flex-end;
 }
 
+.save-edit-btn, .exit-btn {
+  padding: 4px;
+  width: 70px;
+  margin: 0 0 0 5px;
+}
+
 .logout-btn {
   padding: 2px 4px;
   margin: 5px 0 0 0;
