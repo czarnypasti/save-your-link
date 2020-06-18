@@ -31,6 +31,7 @@ app.post('/auth', (req, res) => {
   const password = req.body.password
   if (username && password) {
     dbCon.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, result) => {
+      if (err) throw err
       if (result.length > 0) {
         req.session.loggedin = true
         req.session.userId = result[0].id
