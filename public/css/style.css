@@ -7,12 +7,12 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
-body, form, div {
+.container, form, div {
   display: flex;
   flex-direction: column;
 }
 
-body {
+.container {
   align-items: center;
 }
 
@@ -129,4 +129,18 @@ input {
   padding: 4px;
   width: 70px;
   margin: 0 0 0 5px;
+}
+
+.search-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 20px 0;
+}
+
+.search-wrapper > label {
+  padding: 0 5px 0 0;
+}
+
+.hide-link {
+  display: none;
 }

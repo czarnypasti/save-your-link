@@ -1,18 +1,13 @@
 const host = window.location.hostname === 'localhost' ? 'localhost:3000' : window.location.hostname
-
 const socket = io.connect(host)
-const linksContainer = document.querySelector('.links-container')
-const saveEditBtn = document.querySelector('.save-edit-btn')
-const exitBtn = document.querySelector('.exit-btn')
 
+const linksContainer = document.querySelector('.links-container')
+const searchBar = document.querySelector('#search')
 const editModule = document.querySelector('.edit-module-wrapper')
 const nameEdit = document.querySelector('#name-edit')
 const linkEdit = document.querySelector('#link-edit')
 const tagsEdit = document.querySelector('#tags-edit')
 const idEdit = document.querySelector('#id-edit')
-const alerts = [...document.querySelectorAll('.alert')]
-
-const editInputs = [nameEdit, linkEdit, tagsEdit, idEdit]
 
 socket.emit('linksRequest', '')
 socket.on('parsedLinks', async data => {
@@ -35,41 +30,7 @@ socket.on('parsedLinks', async data => {
 
   editLink(editBtns, linksWrappers)
   deleteLink(deleteBtns)
-})
-
-exitBtn.addEventListener('click', () => {
-  editInputs.map(x => x.value = '')
-  editModule.classList.remove('module--display')
-})
-
-saveEditBtn.addEventListener('click', () => {
-  alerts.map(item => item.classList.remove('alert--display'))
-  const emptyInputs = editInputs.filter(input => !input.value).map(input => input.id)
-
-  if (emptyInputs.length != 0) {
-    alerts.filter(item => 
-      emptyInputs.includes(item.dataset.alert) ? 
-        item.classList.add('alert--display') : 
-        null
-    )
-  } else {
-    const tagsArray = tagsEdit.value.split(',').map(x => x.replace(/ /g, '')).filter(x => x != '')
-    const uniqueTags = [...new Set(tagsArray)].join(',')
-    const _link = linkEdit.value.match(/^((http|https):\/\/)/g) ? linkEdit.value : `http://${linkEdit.value}`
-
-    const linksWrappers = [...document.querySelectorAll('.link-wrapper')]
-
-    const { name, link, tags } = findById(linksWrappers, idEdit.value)
-
-    name.textContent = nameEdit.value
-    link.setAttribute('href', _link)
-    tags.textContent = `tags: ${uniqueTags.replace(/,/g, ', ')}`
-
-    socket.emit('editedData', {name: nameEdit.value, link: _link, tags: uniqueTags, id: idEdit.value})
-
-    editInputs.map(x => x.value = '')
-    editModule.classList.remove('module--display')
-  }
+  filterLinks(linksWrappers)
 })
 
 function generateLinksList(array) {
@@ -141,6 +102,26 @@ function deleteLink(btns) {
 
       linkWrapper.remove()
       socket.emit('deletedLink', thisId)
+    })
+  })
+}
+
+function filterLinks(links) {
+  const linksWrappers = [...links]
+  const tagsArrays = links.map(link => {
+    return link.childNodes[2].textContent.replace('tags: ', '').split(', ')
+  })
+
+  searchBar.addEventListener('input', e => {
+    let searchedTag = e.target.value
+
+    tagsArrays.map((tagsArray, index) => {
+      if (tagsArray.some(tag => tag !== searchedTag)) {
+        linksWrappers[index].classList.add('hide-link')
+      }  
+      if (tagsArray.some(tag => tag === searchedTag) || searchedTag == '') {
+        linksWrappers[index].classList.remove('hide-link')
+      }
     })
   })
 }

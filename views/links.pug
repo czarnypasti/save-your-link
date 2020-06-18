@@ -3,8 +3,13 @@ html
     link(rel="stylesheet", href="./css/style.css")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js")
   body
-    include ./header.pug
-    h3 links:
-    div.links-container
-    include ./edit_module.pug
+    div.container
+      include ./header.pug
+      h3 links:
+      div.search-wrapper
+        label(for="search") search:
+        input#search(type="text", name="search")
+      div.links-container
+      include ./edit_module.pug
     script(src="./js/links.js")
+    script(src="./js/edit_module.js")

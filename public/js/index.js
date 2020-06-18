@@ -1,6 +1,6 @@
 const host = window.location.hostname === 'localhost' ? 'localhost:3000' : window.location.hostname
-
 const socket = io.connect(host)
+
 const name = document.querySelector('#name')
 const link = document.querySelector('#link')
 const tags = document.querySelector('#tags')
