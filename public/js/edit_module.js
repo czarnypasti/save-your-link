@@ -31,7 +31,6 @@ saveEditBtn.addEventListener('click', () => {
     name.textContent = nameEdit.value
     link.setAttribute('href', _link)
     tags.textContent = `tags: ${uniqueTags.replace(/,/g, ', ')}`
-
     socket.emit('editedData', {name: nameEdit.value, link: _link, tags: uniqueTags, id: idEdit.value})
 
     editInputs.map(x => x.value = '')

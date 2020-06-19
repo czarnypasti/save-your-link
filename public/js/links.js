@@ -107,19 +107,19 @@ function deleteLink(btns) {
 }
 
 function filterLinks(links) {
-  const linksWrappers = [...links]
-  const tagsArrays = links.map(link => {
-    return link.childNodes[2].textContent.replace('tags: ', '').split(', ')
-  })
-
   searchBar.addEventListener('input', e => {
+    const linksWrappers = [...links]
+    const tagsArrays = links.map(link => {
+      return link.childNodes[2].textContent.replace('tags: ', '').split(', ')
+    })
+
     let searchedTag = e.target.value
 
     tagsArrays.map((tagsArray, index) => {
       if (tagsArray.some(tag => tag !== searchedTag)) {
         linksWrappers[index].classList.add('hide-link')
       }  
-      if (tagsArray.some(tag => tag === searchedTag) || searchedTag == '') {
+      if (tagsArray.some(tag => tag.match(new RegExp(searchedTag, 'gi'))) || searchedTag == '') {
         linksWrappers[index].classList.remove('hide-link')
       }
     })
