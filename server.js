@@ -78,7 +78,7 @@ app.get('/links', (req, res) => {
   res.end()
 })
 
-const server = app.listen(port, () => console.log(`Server running -> PORT ${port}`))
+const server = app.listen(port, () => console.log(`Server is running -> PORT ${port}`))
 
 const io = require('socket.io')(server)
 
